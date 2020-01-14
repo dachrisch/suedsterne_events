@@ -3,7 +3,6 @@ import os
 
 FLASK_SERVER_HOST = os.getenv('EVENTS_SERVICE_HOST', 'localhost')
 FLASK_SERVER_PORT = os.getenv('EVENTS_SERVICE_PORT', '8888')
-FLASK_SERVER_NAME = '%s:%s' % (FLASK_SERVER_HOST, FLASK_SERVER_PORT)
 FLASK_DEBUG = True  # Do not use debug mode in production
 
 # Flask-Restplus settings
