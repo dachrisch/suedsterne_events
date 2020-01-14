@@ -36,6 +36,11 @@ def create_app():
 
 def main():
     app = create_app()
+
+    @app.route('/')
+    def index():
+        return '<br>'.join(['<a href="%s">%s</a>' % (p, p) for p in app.url_map.iter_rules()])
+
     log.info('>>>>> Starting development server at http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
     app.run(debug=settings.FLASK_DEBUG, host=settings.FLASK_SERVER_HOST, port=settings.FLASK_SERVER_PORT)
 
