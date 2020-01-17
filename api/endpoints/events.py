@@ -2,7 +2,6 @@ import logging
 from flask_restplus import Resource
 
 from api.db.service import EventsDBService
-from api.model import Event
 from api.restplus import api
 from api.serializers import event
 
@@ -15,7 +14,7 @@ ns = api.namespace('events', description='Operations for Events')
 class EventsCollection(Resource):
     service = EventsDBService()
 
-    @api.marshal_with(event)
+    @api.marshal_with(event, as_list=True)
     def get(self):
         return EventsCollection.service.get_all_events()
 

@@ -1,11 +1,12 @@
 import logging.config
 import os
 
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, url_for
 
 import settings
 from api.endpoints.events import ns as deployments_namespace
 from api.restplus import api
+from web.views import EventsView
 
 logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), './logging.conf'))
 logging.config.fileConfig(logging_conf_path)
@@ -30,6 +31,8 @@ def create_app():
     api.add_namespace(deployments_namespace)
     flask_app.register_blueprint(blueprint)
 
+    EventsView.register(flask_app)
+
     return flask_app
 
 
@@ -40,7 +43,8 @@ def main():
     def index():
         return '<br>'.join(['<a href="%s">%s</a>' % (p, p) for p in app.url_map.iter_rules()])
 
-    log.info('>>>>> Starting development server at http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
+    log.info('>>>>> Starting development server at http://%s:%s/api/ <<<<<' % (
+        settings.FLASK_SERVER_HOST, settings.FLASK_SERVER_PORT))
     app.run(debug=settings.FLASK_DEBUG, host=settings.FLASK_SERVER_HOST, port=settings.FLASK_SERVER_PORT)
 
 

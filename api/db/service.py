@@ -14,12 +14,15 @@ class EventsDBService(object):
 FROM `tx_events_domain_model_date` training_date
 INNER JOIN `tx_events_event_date_mm` relationship ON training_date.uid = relationship.uid_foreign
 INNER JOIN `tx_events_domain_model_event` training ON training.uid = relationship.uid_local
-WHERE training_date.`location`='München' AND training_date.`date_time`>=CURDATE() """)
+WHERE training_date.`location`='München' AND training_date.`date_time`>=CURDATE() AND training_date.hidden=0 AND
+training_date.alternative_title = ''
+ORDER BY training_date.date_time""")
 
         events = []
         for row in cursor:
             _id, title, start_date, end_date, location, page = row
-            events.append(Event(_id, title, start_date, end_date, location, self._resolve_link(page)))
+            events.append(
+                Event(_id, title, start_date, end_date, location, self._resolve_link(page)))
 
         self._close(cnx, cursor)
         return events
@@ -59,7 +62,7 @@ WHERE training_date.`location`='München' AND training_date.`date_time`>=CURDATE
 
         try:
             cursor.execute("""SELECT slug FROM `pages` WHERE uid = %s """, (uid,))
-            (slug, ) = cursor.fetchone()
+            (slug,) = cursor.fetchone()
         finally:
             self._close(cnx, cursor)
 

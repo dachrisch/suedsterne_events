@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>Südsterne - Events</title>
+</head>
+<body>
+<h1>Currently available Events</h1>
+{% for event in events %}
+<br>
+{% if event.start_date == event.end_date %}
+{{ event.start_date }}</br>
+{% else %}
+{{ event.start_date }} - {{ event.end_date }}</br>
+{% endif %}
+<b>{{ event.title }}</b></br>
+in {{ event.location }}</br>
+<a href="{{ event.booking_link }}">hier anmelden</a>
+</p>
+{% endfor %}
+</body>
+</html>

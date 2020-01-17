@@ -10,14 +10,3 @@ event = api.model('Event', {
     'location': fields.String(reqired=True, description='Where the Event is happening'),
     'booking_link': fields.String(reqired=False, description='Link to book Event'),
 })
-
-pagination = api.model('A page of results', {
-    'page': fields.Integer(description='Number of this page of results'),
-    'pages': fields.Integer(description='Total number of pages of results'),
-    'per_page': fields.Integer(description='Number of items per page of results'),
-    'total': fields.Integer(description='Total number of results'),
-})
-
-list_of_events = api.inherit('List of db', pagination, {
-    'db': fields.List(fields.Nested(event))
-})

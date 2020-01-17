@@ -1,3 +1,6 @@
 flask
 flask-restplus
 mysql-connector-python
+flask-classful
+bravado
+python-dateutil
