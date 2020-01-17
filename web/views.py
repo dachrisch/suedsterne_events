@@ -7,7 +7,7 @@ import settings
 
 
 class EventsView(FlaskView):
-    route_base = '/views'
+    route_base = '/views/events'
 
     def index(self):
         client = SwaggerClient.from_url('http://%s:%s%s' % (
